@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Copyright 2011 Quenio dos Santos
+#
+# You may use this script as-is or modify it to better support your environment.
+# Please submit any modifications useful to the general group of users at: https://github.com/quenio/aws
+#
+
+if [ $# -lt 1 ] ; then
+	echo Please specify the data to be signed. E.g.: sdb-signature "data"
+	exit 1
+fi
+
+SDB_SIGNATURE_DATA=$1
+
+echo -n "${SDB_SIGNATURE_DATA}" | openssl sha256 -hmac ${SDB_SECRET_KEY} -binary | openssl enc -base64

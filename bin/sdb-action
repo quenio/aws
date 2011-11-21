@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# Copyright 2011 Quenio dos Santos
+#
+# You may use this script as-is or modify it to better support your environment.
+# Please submit any modifications useful to the general group of users at: https://github.com/quenio/aws
+#
+
+if [ $# -lt 1 ] ; then
+	echo Please specify the action. E.g.: sdb-action ListDomains
+	exit 1
+fi
+
+SDB_ACTION=$1
+SDB_VERSION=2009-04-15
+SDB_SIGNATURE_METHOD="HmacSHA256"
+SDB_SIGNATURE_VERSION="2"
+SDB_TIMESTAMP=$(sdb-timestamp)
+
+SDB_PARAM_ACCESS_KEY="AWSAccessKeyId=${SDB_ACCESS_KEY}"
+SDB_PARAM_ACTION="Action=${SDB_ACTION}"
+SDB_PARAM_SIGNATURE_METHOD="SignatureMethod=${SDB_SIGNATURE_METHOD}"
+SDB_PARAM_SIGNATURE_VERSION="SignatureVersion=${SDB_SIGNATURE_VERSION}"
+SDB_PARAM_TIMESTAMP="Timestamp=${SDB_TIMESTAMP}"
+SDB_PARAM_VERSION="Version=${SDB_VERSION}"
+
+sdb-get "${SDB_PARAM_ACCESS_KEY}&${SDB_PARAM_ACTION}&${SDB_PARAM_SIGNATURE_METHOD}&${SDB_PARAM_SIGNATURE_VERSION}&${SDB_PARAM_TIMESTAMP}&${SDB_PARAM_VERSION}"

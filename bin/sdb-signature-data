@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# Copyright 2011 Quenio dos Santos
+#
+# You may use this script as-is or modify it to better support your environment.
+# Please submit any modifications useful to the general group of users at: https://github.com/quenio/aws
+#
+
+if [ $# -lt 4 ] ; then
+	echo Please specify all parameters. 
+	echo E.g.: sdb-signature-data GET sdb.amazonaws.com "/" "Param1=Val1&Param2=Val2"
+	exit 1
+fi
+
+SDB_METHOD=$1
+SDB_HOST=$2
+SDB_PATH=$3
+SDB_PARAMS=$4
+
+echo ${SDB_METHOD} && echo ${SDB_HOST} && echo ${SDB_PATH} && echo -n ${SDB_PARAMS}

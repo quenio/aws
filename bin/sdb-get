@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Copyright 2011 Quenio dos Santos
+#
+# You may use this script as-is or modify it to better support your environment.
+# Please submit any modifications useful to the general group of users at: https://github.com/quenio/aws
+#
+
+if [ $# -lt 1 ] ; then
+	echo Please specify the parameters. E.g.: sdb-get "Param1=Val1&Param2=Val2"
+	exit 1
+fi
+
+SDB_METHOD=GET
+SDB_HOST=sdb.amazonaws.com
+SDB_PATH=/
+SDB_PARAMS=$1
+
+SDB_SIGNATURE_DATA=$(sdb-signature-data ${SDB_METHOD} ${SDB_HOST} ${SDB_PATH} ${SDB_PARAMS})
+SDB_SIGNATURE=$(sdb-signature "${SDB_SIGNATURE_DATA}")
+
+curl -s -S --get --data "${SDB_PARAMS}" --data-urlencode "Signature=${SDB_SIGNATURE}" "https://${SDB_HOST}"
+
+echo
