@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Copyright 2011 Quenio dos Santos
+#
+# You may use this script as-is or modify it to better support your environment.
+# Please submit any modifications useful to the general group of users at: https://github.com/quenio/aws
+#
+
+if [ $# -lt 2 ] ; then
+	echo Please specify all the arguments. 
+	echo E.g.: sdb-attrib-get DomainName ItemName [AttribName]
+	exit 1
+fi
+
+SDB_DOMAIN_NAME=$1
+SDB_ITEM_NAME=$2
+SDB_ATTRIB_NAME=$3
+SDB_ATTRIB_VALUE=$4
+
+#SDB_ATTRIBUTES="Attribute.1.Name=${SDB_ATTRIB_NAME}&Attribute.1.Value=${SDB_ATTRIB_VALUE}"
+
+SDB_PARAMS="DomainName=${SDB_DOMAIN_NAME}&ItemName=${SDB_ITEM_NAME}"
+
+sdb-action GetAttributes "${SDB_PARAMS}" | xml-elem-pair Name Value =

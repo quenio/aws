@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# Copyright 2011 Quenio dos Santos
+#
+# You may use this script as-is or modify it to better support your environment.
+# Please submit any modifications useful to the general group of users at: https://github.com/quenio/aws
+#
+
+if [ $# -lt 3 ] ; then
+	echo Please specify the element name. E.g.: xml-elem-pair Elem1 Elem2 Separator
+	exit 1
+fi
+
+XML_ELEM_1=$1
+XML_ELEM_2=$2
+PAIR_SEP=$3
+
+sed -n "s/.*<${XML_ELEM_1}>\(.*\)<\/${XML_ELEM_1}><${XML_ELEM_2}>\(.*\)<\/${XML_ELEM_2}>.*/\1${PAIR_SEP}\2/p"
